@@ -54,29 +54,32 @@ const rest = new REST({ version: '10' }).setToken(TOKEN);
   }
 })();
 
-let rankEmojis = new Map();
+let customEmojis = new Map();
 
 async function loadRankEmojis() {
   const emojis = await client.application.emojis.fetch();
-  rankEmojis = new Map(emojis.map(e => [e.name, e.toString()]));
-  console.log(`${rankEmojis.size} application emojis loaded.`);
+  customEmojis = new Map(emojis.map(e => [e.name, e.toString()]));
+  console.log(`${customEmojis.size} application emojis loaded.`);
 }
 
 const rankEmoji = (rank) =>
-  rank?.id != null ? (rankEmojis.get(`${rank.id}_rank`) ?? '') : '';
+  rank?.id != null ? (customEmojis.get(`${rank.id}_rank`) ?? '') : '';
 
 const skillEmoji = (skill) => {
   if (!skill) return '';
 
   const raw = String(skill).trim().toLowerCase();
-  if (raw === 'unranked') return rankEmojis.get('none') ?? '';
+  if (raw === 'unranked') return customEmojis.get('none') ?? '';
 
   const parts = raw.split(/\s+/);
   const direct = parts.join('_');
   const reversed = [...parts].reverse().join('_');
 
-  return rankEmojis.get(direct) ?? rankEmojis.get(reversed) ?? '';
+  return customEmojis.get(direct) ?? customEmojis.get(reversed) ?? '';
 };
+
+const classEmoji = (id) =>
+  id != null ? (customEmojis.get(`${id}_class`) ?? customEmojis.get(`unknown_class`)) : '';
 
 client.once('clientReady', async () => {
   console.log(`Logged in as ${client.user.tag} !`);
@@ -87,7 +90,7 @@ client.once('clientReady', async () => {
   }
 
   updatePresence();
-  setInterval(updatePresence, 30_000);
+  setInterval(updatePresence, 60_000);
 });
 
 const fmt = (n, digits = 0) =>
@@ -353,13 +356,13 @@ client.on('interactionCreate', async interaction => {
       }
 
       const s = player.stats;
-      const deaths = Number(s.deaths) || 0;
+      const c = player.class_exp;
       const games = Number(s.games) || 0;
       const winRate = games > 0 ? Number(s.wins) / games : 0;
 
       const statsEmbed = new EmbedBuilder()
         .setColor(0x7C8148)
-        .setTitle(`BlockFront stats of ${player.username}`)
+        .setTitle(`BlockFront stats of ${escapeMarkdown(player.username)}`)
         .setThumbnail(`https://mc-heads.net/avatar/${player.uuid}/128`)
         .setDescription(
           `**Rank:** ${player.rank?.title ?? 'N/A'} ${rankEmoji(player.rank)}\n` +
@@ -375,12 +378,12 @@ client.on('interactionCreate', async interaction => {
               `Deaths: **${fmt(s.deaths)}**\n` +
               `K/D: **${fmt(s.kd, 2)}**\n` +
               `Assists: **${fmt(s.assists)}**\n` +
-              `Best streak: **${fmt(s.kills_streak)}\n**` +
+              `Best streak: **${fmt(s.kills_streak)}**\n` +
               `Headshots: **${fmt(s.headshots)}**\n` +
               `HS ratio: **${pct(s.headshots_ratio)}**\n` +
               `Noscopes: **${fmt(s.noscopes)}**\n` +
               `Backstabs: **${fmt(s.backstabs)}**\n` +
-              `First bloods: **${fmt(s.first_bloods)}\n**` +
+              `First bloods: **${fmt(s.first_bloods)}**\n` +
               `Bots: **${fmt(s.kills_bots)}**\n` +
               `Vehicles: **${fmt(s.kills_vehicles)}**\n` +
               `Fire: **${fmt(s.kills_fire)}**`,
@@ -415,6 +418,21 @@ client.on('interactionCreate', async interaction => {
             value: 
               `Playtime: **${formatTime(s.time)}**\n` + 
               `Completed Bootcamp: **${formatBootcamp(s.bootcamp)}**`,
+            inline: false
+          },
+          {
+            name: "🎖️ Class EXP",
+            value:
+              `${classEmoji(0)} Rifleman: **${fmt(c[0])}**\n` + 
+              `${classEmoji(1)} Lt. Rifle: **${fmt(c[1])}**\n` + 
+              `${classEmoji(2)} Assault: **${fmt(c[2])}**\n` + 
+              `${classEmoji(3)} Support: **${fmt(c[3])}**\n` + 
+              `${classEmoji(4)} Medic: **${fmt(c[4])}**\n` + 
+              `${classEmoji(5)} Sniper: **${fmt(c[5])}**\n` + 
+              `${classEmoji(6)} Gunner: **${fmt(c[6])}**\n` + 
+              `${classEmoji(7)} Anti-Tank: **${fmt(c[7])}**\n` + 
+              `${classEmoji(8)} Specialist: **${fmt(c[8])}**\n` + 
+              `${classEmoji(9)} Commander: **${fmt(c[9])}**`,
             inline: false
           }
         )
