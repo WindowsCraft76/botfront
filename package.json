@@ -1,0 +1,22 @@
+{
+  "name": "botfront",
+  "version": "1.0.0",
+  "description": "BotFront",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://windowscraft76.fr/"
+  },
+  "license": "MIT",
+  "author": "WindowsCraft76",
+  "type": "commonjs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "discord.js": "^14.27.0",
+    "dotenv": ""
+  },
+  "devDependencies": {}
+}
