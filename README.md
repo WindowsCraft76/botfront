@@ -4,11 +4,11 @@
     </picture>
     <p>
         <a href="https://github.com/WindowsCraft76/botfront/blob/main/LICENSE"><img alt="License" src="https://img.shields.io/github/license/WindowsCraft76/botfront?style=for-the-badge"></a>
-        <a href="https://www.python.org/downloads/release/python-3140/"><img alt="Discord.js" src="https://img.shields.io/badge/discord.js-14.27.0-%230D7BBB?style=for-the-badge"></a>
+        <a href="https://discord.js.org/"><img alt="Discord.js" src="https://img.shields.io/badge/discord.js-14.27.0-%230D7BBB?style=for-the-badge"></a>
         <a href="http://kofi.windowscraft76.fr/"><img alt="ko-fi" src="https://img.shields.io/badge/Support_me_on_Ko--fi-FF5A16?logo=ko-fi&logoColor=white&style=for-the-badge"></a>
         <br>
-        <a href="https://windowscraft76.fr/botfront/invite/"><img alt="Invite" src="https://img.shields.io/badge/invite_BOTFRONT_to_your server-8A2BE2?style=for-the-badge"></a>
-        <a href="https://windowscraft76.fr/botfront/issues/"><img alt="Issues" src="https://img.shields.io/badge/issues-red?style=for-the-badge"></a>
+        <a href="https://windowscraft76.fr/botfront/invite"><img alt="Invite" src="https://img.shields.io/badge/invite_BOTFRONT_to_your server-8A2BE2?style=for-the-badge"></a>
+        <a href="https://windowscraft76.fr/botfront/issues"><img alt="Issues" src="https://img.shields.io/badge/issues-red?style=for-the-badge"></a>
     </p>
     <p>
         <b>Unofficial bot to check BlockFront stats on Discord!</b>
